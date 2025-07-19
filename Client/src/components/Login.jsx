@@ -26,7 +26,11 @@ const Login = () => {
         localStorage.setItem('token', data.data.token);
         setTimeout(() => {
           setPopup(null);
-          navigate('/profile');
+          if (data.data.user && data.data.user.role === 'admin') {
+            navigate('/portal');
+          } else {
+            navigate('/profile');
+          }
         }, 1500);
       } else {
         setPopup({ type: 'error', message: data.message || 'Login failed' });

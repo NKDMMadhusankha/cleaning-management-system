@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 const { validateRegistration } = require('../middleware/validation');
 const { authenticateToken } = require('../middleware/auth');
 
@@ -19,16 +20,28 @@ router.use((req, res, next) => {
 // Register
 router.post('/register', validateRegistration, async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, password, address } = req.body;
-    const existingUser = await User.findByEmail(email);
-    if (existingUser) {
-      return res.status(400).json({ success: false, message: 'User with this email already exists' });
+    const { firstName, lastName, email, phone, password, address, role } = req.body;
+    if (role === 'admin') {
+      const existingAdmin = await Admin.findByEmail(email);
+      if (existingAdmin) {
+        return res.status(400).json({ success: false, message: 'Admin with this email already exists' });
+      }
+      const admin = new Admin({ firstName, lastName, email, phone, password, role: 'admin' });
+      await admin.save();
+      console.log('Admin registered:', admin.email);
+      const token = generateToken(admin._id);
+      return res.status(201).json({ success: true, message: 'Admin registered successfully', data: { user: admin.getPublicProfile(), token } });
+    } else {
+      const existingUser = await User.findByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ success: false, message: 'User with this email already exists' });
+      }
+      const user = new User({ firstName, lastName, email, phone, password, address: address || {} });
+      await user.save();
+      console.log('User registered:', user.email);
+      const token = generateToken(user._id);
+      return res.status(201).json({ success: true, message: 'User registered successfully', data: { user: user.getPublicProfile(), token } });
     }
-    const user = new User({ firstName, lastName, email, phone, password, address: address || {} });
-    await user.save();
-    console.log('User registered:', user.email); // Log registration
-    const token = generateToken(user._id);
-    res.status(201).json({ success: true, message: 'User registered successfully', data: { user: user.getPublicProfile(), token } });
   } catch (error) {
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
@@ -45,19 +58,23 @@ router.post('/register', validateRegistration, async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findByEmail(email).select('+password');
-    if (!user) {
+    // Try to find user in Admin first, then User
+    let account = await Admin.findByEmail(email).select('+password');
+    if (!account) {
+      account = await User.findByEmail(email).select('+password');
+    }
+    if (!account) {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });
     }
-    if (!user.isActive) {
+    if (!account.isActive) {
       return res.status(401).json({ success: false, message: 'Account is deactivated. Please contact support.' });
     }
-    const isPasswordValid = await user.comparePassword(password);
+    const isPasswordValid = await account.comparePassword(password);
     if (!isPasswordValid) {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });
     }
-    const token = generateToken(user._id);
-    res.json({ success: true, message: 'Login successful', data: { user: user.getPublicProfile(), token } });
+    const token = generateToken(account._id);
+    res.json({ success: true, message: 'Login successful', data: { user: account.getPublicProfile(), token } });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Login failed', error: error.message });
   }

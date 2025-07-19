@@ -11,6 +11,7 @@ import RegisterForm from './components/RegisterForm';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import AdminPortal from './components/AdminPortal';
+import AdminRegister from './components/AdminRegister';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +44,7 @@ function App() {
             </>
           } />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/adminregister" element={<AdminRegister />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/portal" element={<AdminPortal />} />
