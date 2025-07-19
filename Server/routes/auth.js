@@ -83,11 +83,15 @@ router.post('/login', async (req, res) => {
 // Verify JWT
 router.get('/verify', authenticateToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
-    if (!user || !user.isActive) {
+    // Try to find user in Admin first, then User (same logic as login)
+    let account = await Admin.findById(req.user.userId);
+    if (!account) {
+      account = await User.findById(req.user.userId);
+    }
+    if (!account || !account.isActive) {
       return res.status(401).json({ success: false, message: 'Invalid token or user not found' });
     }
-    res.json({ success: true, message: 'Token is valid', data: { user: user.getPublicProfile() } });
+    res.json({ success: true, message: 'Token is valid', data: { user: account.getPublicProfile() } });
   } catch (error) {
     res.status(401).json({ success: false, message: 'Invalid token' });
   }

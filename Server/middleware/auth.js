@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 
 // Middleware to authenticate JWT token
 const authenticateToken = async (req, res, next) => {
@@ -19,9 +20,12 @@ const authenticateToken = async (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Check if user exists and is active
-    const user = await User.findById(decoded.userId);
-    if (!user || !user.isActive) {
+    // Check if user exists and is active (check Admin first, then User)
+    let account = await Admin.findById(decoded.userId);
+    if (!account) {
+      account = await User.findById(decoded.userId);
+    }
+    if (!account || !account.isActive) {
       return res.status(401).json({
         success: false,
         message: 'Invalid token or user not found'

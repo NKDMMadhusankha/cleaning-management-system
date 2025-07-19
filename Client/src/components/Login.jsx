@@ -26,10 +26,12 @@ const Login = () => {
       if (data.success) {
         setPopup({ type: 'success', message: 'Login successful!' });
         localStorage.setItem('token', data.data.token);
-        // Refresh auth status
+        // Refresh auth status immediately
         await checkAuthStatus();
-        setTimeout(() => {
+        setTimeout(async () => {
           setPopup(null);
+          // Double-check auth status before navigation
+          await checkAuthStatus();
           if (data.data.user && data.data.user.role === 'admin') {
             navigate('/portal');
           } else {
