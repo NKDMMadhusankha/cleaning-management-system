@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../App';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [popup, setPopup] = useState(null);
   const navigate = useNavigate();
+  const { checkAuthStatus } = useAuth();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -24,6 +26,8 @@ const Login = () => {
       if (data.success) {
         setPopup({ type: 'success', message: 'Login successful!' });
         localStorage.setItem('token', data.data.token);
+        // Refresh auth status
+        await checkAuthStatus();
         setTimeout(() => {
           setPopup(null);
           if (data.data.user && data.data.user.role === 'admin') {

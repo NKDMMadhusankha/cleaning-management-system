@@ -161,7 +161,7 @@ const Services = () => {
             </p>
 
             {/* Auto-scrolling Services List */}
-            <div className="overflow-hidden rounded-2xl bg-black p-4 shadow-inner">
+            <div className="overflow-hidden rounded-2xl bg-white p-4 shadow-inner">
                   <div 
                 ref={scrollRef}
                 className="flex space-x-4 overflow-x-hidden"

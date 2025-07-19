@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -13,10 +13,73 @@ import Profile from './components/Profile';
 import AdminPortal from './components/AdminPortal';
 import AdminRegister from './components/AdminRegister';
 
+// Create Auth Context
+const AuthContext = createContext();
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [authState, setAuthState] = useState({
+    isLoggedIn: false,
+    userRole: null,
+    user: null
+  });
+
+  const checkAuthStatus = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const response = await fetch('/api/auth/verify', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await response.json();
+        if (data.success) {
+          setAuthState({
+            isLoggedIn: true,
+            userRole: data.data.user.role,
+            user: data.data.user
+          });
+        } else {
+          localStorage.removeItem('token');
+          setAuthState({
+            isLoggedIn: false,
+            userRole: null,
+            user: null
+          });
+        }
+      } catch (error) {
+        localStorage.removeItem('token');
+        setAuthState({
+          isLoggedIn: false,
+          userRole: null,
+          user: null
+        });
+      }
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setAuthState({
+      isLoggedIn: false,
+      userRole: null,
+      user: null
+    });
+  };
 
   useEffect(() => {
+    // Check auth status on app load
+    checkAuthStatus();
+    
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -30,27 +93,30 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Navbar />
-              <Hero />
-              <BookingForm />
-              <About />
-              <Services />
-              <Footer />
-            </>
-          } />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/adminregister" element={<AdminRegister />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/portal" element={<AdminPortal />} />
-        </Routes>
-      </div>
-    </Router>
+    <AuthContext.Provider value={{ ...authState, checkAuthStatus, logout }}>
+      <Router>
+        <div className="min-h-screen bg-gray-50">
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Navbar />
+                <Hero />
+                <BookingForm />
+                <About />
+                <Services />
+                <Footer />
+              </>
+            } />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/portal" element={<AdminPortal />} />
+
+            {/* <Route path="/adminregister" element={<AdminRegister />} /> */}
+          </Routes>
+        </div>
+      </Router>
+    </AuthContext.Provider>
   );
 }
 
