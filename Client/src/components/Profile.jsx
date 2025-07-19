@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navbar from './Navbar';
 
 const Profile = () => {
   // Example user data - replace with actual user data from your backend
@@ -63,7 +64,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
         {/* User Profile Section */}
         <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
@@ -198,7 +201,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

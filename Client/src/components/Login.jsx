@@ -1,7 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [popup, setPopup] = useState(null);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email, password: form.password })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setPopup({ type: 'success', message: 'Login successful!' });
+        localStorage.setItem('token', data.data.token);
+        setTimeout(() => {
+          setPopup(null);
+          navigate('/profile');
+        }, 1500);
+      } else {
+        setPopup({ type: 'error', message: data.message || 'Login failed' });
+        setTimeout(() => setPopup(null), 3000);
+      }
+    } catch (err) {
+      setPopup({ type: 'error', message: 'Login failed' });
+      setTimeout(() => setPopup(null), 3000);
+    }
+    setLoading(false);
+  };
+
   return (
     <>
       <style>{`
@@ -34,6 +71,29 @@ const Login = () => {
           animation: float-slower 11s ease-in-out infinite;
         }
       `}</style>
+      {popup && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '32px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 9999,
+            background: popup.type === 'success' ? '#8cc53f' : '#ff4d4f',
+            color: '#fff',
+            padding: '16px 32px',
+            borderRadius: '999px',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+            fontWeight: 600,
+            fontSize: '1.1rem',
+            letterSpacing: '0.02em',
+            transition: 'all 0.3s',
+            opacity: 0.95
+          }}
+        >
+          {popup.message}
+        </div>
+      )}
       <div className="min-h-screen flex items-center justify-center relative bg-white overflow-hidden">
         {/* Decorative Background */}
         <div className="absolute inset-0 -z-10">
@@ -54,16 +114,24 @@ const Login = () => {
           <p className="text-gray-600 mb-8">
             Simplify your life and enjoy a spotless home with <span className="font-semibold text-[#8cc53f]">CleanEase</span>. Log in to book, manage, or track your cleaning services.
           </p>
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleLogin}>
             <input
-              type="text"
-              placeholder="Username"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
               className="w-full px-5 py-3 border border-gray-200 rounded-full focus:outline-none focus:border-[#8cc53f] text-[#202020] bg-gray-50"
+              required
             />
             <input
               type="password"
+              name="password"
               placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
               className="w-full px-5 py-3 border border-gray-200 rounded-full focus:outline-none focus:border-[#8cc53f] text-[#202020] bg-gray-50"
+              required
             />
             <div className="flex justify-between items-center text-sm">
               <span></span>
@@ -72,8 +140,9 @@ const Login = () => {
             <button
               type="submit"
               className="w-full bg-[#8cc53f] text-white py-3 rounded-full font-semibold text-lg hover:bg-[#7ab534] transition-all duration-300 hover:scale-105 shadow-md"
+              disabled={loading}
             >
-              Login
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
           <div className="flex items-center my-6">

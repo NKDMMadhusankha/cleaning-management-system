@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -38,9 +40,12 @@ const Register = () => {
       });
       const data = await response.json();
       if (data.success) {
-        setPopup({ type: 'success', message: 'Successfully registered!' });
+        setPopup({ type: 'success', message: 'Successfully registered! Redirecting to login...' });
         setForm({ firstName: '', lastName: '', email: '', phone: '', password: '', confirmPassword: '' });
-        setTimeout(() => setPopup(null), 3000);
+        setTimeout(() => {
+          setPopup(null);
+          navigate('/login');
+        }, 1500);
       } else {
         setPopup({ type: 'error', message: data.message || 'Registration failed' });
         setTimeout(() => setPopup(null), 3000);
@@ -224,7 +229,7 @@ const Register = () => {
               <button className="bg-black text-white rounded-full p-3 hover:scale-110 transition">f</button>
             </div>
             <p className="mt-8 text-center text-gray-600">
-              Already have an account? <a href="#" className="text-[#8cc53f] font-semibold hover:underline">Login</a>
+              Already have an account? <Link to="/login" className="text-[#8cc53f] font-semibold hover:underline">Login</Link>
             </p>
           </div>
           {/* Right: Illustration */}
