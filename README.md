@@ -152,6 +152,4 @@ Host the `Server` folder on your Node.js server (e.g., Heroku, Vercel, AWS).
 
 ---
 
-## License
 
-MIT
