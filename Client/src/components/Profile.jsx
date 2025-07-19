@@ -1,7 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 
 const Profile = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    // Trigger animations after component mounts
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Example user data - replace with actual user data from your backend
   const [user, setUser] = useState({
     name: 'John Doe',
@@ -65,37 +75,104 @@ const Profile = () => {
 
   return (
     <>
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.02);
+          }
+        }
+        
+        .animate-fadeInUp {
+          animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .animate-slideInLeft {
+          animation: slideInLeft 0.5s ease-out forwards;
+        }
+        
+        .animate-pulse-gentle {
+          animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        
+        .initial-hidden {
+          opacity: 0;
+        }
+      `}</style>
       <Navbar />
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className={`min-h-screen bg-gray-50 py-8 transition-all duration-1000 ${isVisible ? 'animate-fadeIn' : 'initial-hidden'}`}>
       <div className="max-w-6xl mx-auto px-4">
         {/* User Profile Section */}
-        <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold text-[#202020] mb-6">My Profile</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="space-y-2">
+        <div className={`bg-white rounded-2xl shadow-md p-6 mb-8 transition-all duration-700 hover:shadow-lg ${isVisible ? 'animate-fadeInUp delay-100' : 'initial-hidden'}`}>
+          <h2 className={`text-3xl font-bold text-[#202020] mb-6 ${isVisible ? 'animate-slideInLeft delay-200' : 'initial-hidden'}`}>My Profile</h2>
+          <div className={`grid md:grid-cols-3 gap-6 ${isVisible ? 'animate-fadeInUp delay-300' : 'initial-hidden'}`}>
+            <div className="space-y-2 hover:transform hover:scale-105 transition-transform duration-300">
               <label className="text-sm text-gray-500">Full Name</label>
               <p className="text-lg font-semibold text-[#202020]">{user.name}</p>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 hover:transform hover:scale-105 transition-transform duration-300">
               <label className="text-sm text-gray-500">Email</label>
               <p className="text-lg font-semibold text-[#202020]">{user.email}</p>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 hover:transform hover:scale-105 transition-transform duration-300">
               <label className="text-sm text-gray-500">Phone</label>
               <p className="text-lg font-semibold text-[#202020]">{user.phone}</p>
             </div>
           </div>
-          <button className="mt-6 px-6 py-2 bg-[#8cc53f] text-white rounded-full hover:bg-[#7ab534] transition-all duration-300">
+          <button className={`mt-6 px-6 py-2 bg-[#8cc53f] text-white rounded-full hover:bg-[#7ab534] transition-all duration-300 hover:scale-105 hover:shadow-lg ${isVisible ? 'animate-fadeInUp delay-400' : 'initial-hidden'}`}>
             Edit Profile
           </button>
         </div>
 
         {/* Upcoming Bookings Section */}
-        <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
-          <h2 className="text-2xl font-bold text-[#202020] mb-6">Upcoming Bookings</h2>
+        <div className={`bg-white rounded-2xl shadow-md p-6 mb-8 transition-all duration-700 hover:shadow-lg ${isVisible ? 'animate-fadeInUp delay-500' : 'initial-hidden'}`}>
+          <h2 className={`text-2xl font-bold text-[#202020] mb-6 ${isVisible ? 'animate-slideInLeft delay-600' : 'initial-hidden'}`}>Upcoming Bookings</h2>
           <div className="space-y-4">
-            {upcomingBookings.map(booking => (
-              <div key={booking.id} className="border border-gray-100 rounded-xl p-4 hover:shadow-md transition-shadow">
+            {upcomingBookings.map((booking, index) => (
+              <div key={booking.id} className={`border border-gray-100 rounded-xl p-4 hover:shadow-md transition-all duration-500 hover:transform hover:scale-[1.02] ${isVisible ? `animate-fadeInUp delay-${700 + index * 100}` : 'initial-hidden'}`}>
                 <div className="grid md:grid-cols-6 gap-4 items-center">
                   <div className="space-y-1">
                     <label className="text-sm text-gray-500">Date</label>
@@ -126,13 +203,13 @@ const Profile = () => {
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleUpdateBooking(booking.id)}
-                      className="px-4 py-2 bg-[#8cc53f] text-white rounded-full hover:bg-[#7ab534] transition-all duration-300"
+                      className="px-4 py-2 bg-[#8cc53f] text-white rounded-full hover:bg-[#7ab534] transition-all duration-300 hover:scale-105 hover:shadow-md"
                     >
                       Update
                     </button>
                     <button
                       onClick={() => handleCancelBooking(booking.id)}
-                      className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300"
+                      className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-300 hover:scale-105 hover:shadow-md"
                     >
                       Cancel
                     </button>
@@ -141,17 +218,17 @@ const Profile = () => {
               </div>
             ))}
             {upcomingBookings.length === 0 && (
-              <p className="text-gray-500 text-center py-4">No upcoming bookings</p>
+              <p className={`text-gray-500 text-center py-4 ${isVisible ? 'animate-fadeIn delay-700' : 'initial-hidden'}`}>No upcoming bookings</p>
             )}
           </div>
         </div>
 
         {/* Previous Bookings Section */}
-        <div className="bg-white rounded-2xl shadow-md p-6">
-          <h2 className="text-2xl font-bold text-[#202020] mb-6">Previous Bookings</h2>
+        <div className={`bg-white rounded-2xl shadow-md p-6 transition-all duration-700 hover:shadow-lg ${isVisible ? 'animate-fadeInUp delay-500' : 'initial-hidden'}`}>
+          <h2 className={`text-2xl font-bold text-[#202020] mb-6 ${isVisible ? 'animate-slideInLeft delay-600' : 'initial-hidden'}`}>Previous Bookings</h2>
           <div className="space-y-4">
-            {previousBookings.map(booking => (
-              <div key={booking.id} className="border border-gray-100 rounded-xl p-4">
+            {previousBookings.map((booking, index) => (
+              <div key={booking.id} className={`border border-gray-100 rounded-xl p-4 hover:shadow-md transition-all duration-500 hover:transform hover:scale-[1.02] ${isVisible ? `animate-fadeInUp delay-${900 + index * 100}` : 'initial-hidden'}`}>
                 <div className="grid md:grid-cols-6 gap-4 items-center">
                   <div className="space-y-1">
                     <label className="text-sm text-gray-500">Date</label>
@@ -196,7 +273,7 @@ const Profile = () => {
               </div>
             ))}
             {previousBookings.length === 0 && (
-              <p className="text-gray-500 text-center py-4">No previous bookings</p>
+              <p className={`text-gray-500 text-center py-4 ${isVisible ? 'animate-fadeIn delay-900' : 'initial-hidden'}`}>No previous bookings</p>
             )}
           </div>
         </div>

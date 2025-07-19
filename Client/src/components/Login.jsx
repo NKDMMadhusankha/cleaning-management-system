@@ -145,16 +145,6 @@ const Login = () => {
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
-          <div className="flex items-center my-6">
-            <div className="flex-grow h-px bg-gray-200"></div>
-            <span className="mx-4 text-gray-400">or continue with</span>
-            <div className="flex-grow h-px bg-gray-200"></div>
-          </div>
-          <div className="flex justify-center gap-4">
-            <button className="bg-black text-white rounded-full p-3 hover:scale-110 transition"><i className="fab fa-google"></i>G</button>
-            <button className="bg-black text-white rounded-full p-3 hover:scale-110 transition"><i className="fab fa-apple"></i></button>
-            <button className="bg-black text-white rounded-full p-3 hover:scale-110 transition"><i className="fab fa-facebook-f"></i>f</button>
-          </div>
           <p className="mt-8 text-center text-gray-600">
             Not a member? <Link to="/register" className="text-[#8cc53f] font-semibold hover:underline">Register now</Link>
           </p>
