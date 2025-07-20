@@ -110,25 +110,25 @@ const Hero = () => {
                       <div className="w-5 h-5 sm:w-6 sm:h-6 bg-[#8cc53f] rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs sm:text-sm">✓</span>
                       </div>
-                      <span className="text-[#202020] font-medium text-sm sm:text-base">Kid & Pet Safe</span>
+                      <span className="text-[#202020] font-medium text-sm sm:text-base">Professional Equipment</span>
                     </div>
                     <div className="flex items-center gap-3 transform transition-all duration-300 hover:scale-105">
                       <div className="w-5 h-5 sm:w-6 sm:h-6 bg-[#8cc53f] rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs sm:text-sm">✓</span>
                       </div>
-                      <span className="text-[#202020] font-medium text-sm sm:text-base">Eco-Friendly</span>
+                      <span className="text-[#202020] font-medium text-sm sm:text-base">Trained Staff</span>
                     </div>
                     <div className="flex items-center gap-3 transform transition-all duration-300 hover:scale-105">
                       <div className="w-5 h-5 sm:w-6 sm:h-6 bg-[#8cc53f] rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs sm:text-sm">✓</span>
                       </div>
-                      <span className="text-[#202020] font-medium text-sm sm:text-base">Insured & Bonded</span>
+                      <span className="text-[#202020] font-medium text-sm sm:text-base">Quality Guaranteed</span>
                     </div>
                     <div className="flex items-center gap-3 transform transition-all duration-300 hover:scale-105">
                       <div className="w-5 h-5 sm:w-6 sm:h-6 bg-[#8cc53f] rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs sm:text-sm">✓</span>
                       </div>
-                      <span className="text-[#202020] font-medium text-sm sm:text-base">Same Day Service</span>
+                      <span className="text-[#202020] font-medium text-sm sm:text-base">Flexible Scheduling</span>
                     </div>
                   </div>
                 </div>
