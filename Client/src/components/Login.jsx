@@ -169,7 +169,7 @@ const Login = () => {
           />
           <div className="bg-white rounded-xl shadow p-6 text-center">
             <h3 className="text-xl font-bold text-[#202020] mb-2">Book. Relax. Shine.</h3>
-            <p className="text-gray-600 mb-2">Track your bookings, manage schedules, and enjoy a sparkling clean space with CleanEase.</p>
+            <p className="text-gray-600 mb-2">Track your bookings, manage schedules, and enjoy a sparkling clean space with CleanBee.</p>
             <span className="inline-block bg-[#8cc53f] text-white px-4 py-1 rounded-full text-sm font-semibold">100% Satisfaction Guaranteed</span>
           </div>
         </div>
