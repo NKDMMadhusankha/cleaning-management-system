@@ -179,7 +179,7 @@ const Services = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left Content */}
-          <div className="opacity-0 translate-y-8 transition-all duration-1000 ease-out order-2 lg:order-1" ref={servicesRef}>
+          <div className="opacity-0 translate-y-8 transition-all duration-1000 ease-out order-1 lg:order-1" ref={servicesRef}>
             <div className="flex items-center gap-2 mb-4 md:mb-6">
               <div className="w-8 md:w-12 h-0.5 bg-[#8cc53f]"></div>
               <span className="text-[#8cc53f] font-medium text-xs md:text-sm tracking-wider uppercase">OUR SERVICES</span>
@@ -233,7 +233,7 @@ const Services = () => {
           </div>
 
           {/* Right Content - Image */}
-          <div className="relative opacity-0 translate-x-8 transition-all duration-1000 ease-out delay-500 order-1 lg:order-2" ref={imageRef}>
+          <div className="relative opacity-0 translate-x-8 transition-all duration-1000 ease-out delay-500 order-2 lg:order-2" ref={imageRef}>
             <div className="relative overflow-hidden w-full sm:w-4/5 md:w-3/4 mx-auto">
               <img 
                 src={require('../Assets/service.jpg')} 
