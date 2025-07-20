@@ -1,10 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import HeroBg from '../Assets/Hero_Bg.png';
 
 const Hero = () => {
   const heroRef = useRef(null);
   const imageRef = useRef(null);
   const statsRef = useRef(null);
+  
+  // State for auto-scrolling text
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const words = ['Home', 'Office', 'Business', 'Space', 'Building'];
 
   useEffect(() => {
     const observerOptions = {
@@ -27,6 +32,23 @@ const Hero = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Modern slide-up animation effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      
+      setTimeout(() => {
+        setCurrentWordIndex((prevIndex) => 
+          prevIndex === words.length - 1 ? 0 : prevIndex + 1
+        );
+        setIsAnimating(false);
+      }, 300); // Animation duration
+      
+    }, 3000); // Change word every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       {/* Hero Section */}
@@ -42,8 +64,26 @@ const Hero = () => {
                     <span className="block text-[#8cc53f] mt-1 sm:mt-2">
                       Cleaning Services
                     </span>
-                    <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-1 sm:mt-2">
-                      for Your Home
+                    <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-1 sm:mt-2 relative">
+                      for Your 
+                      <span className="inline-block ml-2 relative">
+                        <span 
+                          className={`text-[#8cc53f] font-bold transition-all duration-300 ease-in-out transform ${
+                            isAnimating 
+                              ? 'opacity-0 -translate-y-full scale-95' 
+                              : 'opacity-100 translate-y-0 scale-100'
+                          }`}
+                          style={{ 
+                            display: 'inline-block',
+                            minWidth: '180px',
+                            textAlign: 'left',
+                            height: 'auto',
+                            lineHeight: '1.2'
+                          }}
+                        >
+                          {words[currentWordIndex]}
+                        </span>
+                      </span>
                     </span>
                   </h1>
                   
@@ -114,6 +154,36 @@ const Hero = () => {
         .animate-in {
           opacity: 1 !important;
           transform: translateY(0) translateX(0) !important;
+        }
+        
+        @keyframes slideInUp {
+          0% {
+            transform: translateY(100%);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes slideOutUp {
+          0% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100%);
+            opacity: 0;
+          }
+        }
+        
+        .word-enter {
+          animation: slideInUp 0.3s ease-out forwards;
+        }
+        
+        .word-exit {
+          animation: slideOutUp 0.3s ease-in forwards;
         }
       `}</style>
     </>

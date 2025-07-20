@@ -111,7 +111,7 @@ const Services = () => {
   const duplicatedServices = [...services, ...services];
 
   return (
-    <section className="bg-slate-100 py-20 relative overflow-hidden">
+    <section className="bg-green-50 py-20 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute top-10 left-10 w-16 h-16 text-yellow-400 opacity-20">
         <svg viewBox="0 0 24 24" fill="currentColor">

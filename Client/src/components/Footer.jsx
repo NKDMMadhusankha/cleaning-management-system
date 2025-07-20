@@ -2,10 +2,10 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#121212] text-white py-12 relative overflow-hidden">
+    <footer className="bg-black text-white py-12 relative overflow-hidden">
       {/* Newsletter Section - Minimal */}
       <div className="container mx-auto px-4 mb-10">
-        <div className="bg-[#202020] rounded-2xl p-6 flex flex-col items-center gap-3">
+        <div className="rounded-2xl p-6 flex flex-col items-center gap-3">
           <h3 className="text-xl font-semibold text-white mb-1">Get Update From Newsletter</h3>
           <p className="text-gray-400 mb-3 text-center">Regular inspections and feedback mechanisms</p>
           <form className="w-full max-w-md flex gap-2">
@@ -114,7 +114,7 @@ const Footer = () => {
                   <svg className="w-3 h-3 text-[#8cc53f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                  About Us
+                  Residential Home Cleaning
                 </a>
               </li>
               <li>
@@ -122,7 +122,7 @@ const Footer = () => {
                   <svg className="w-3 h-3 text-[#8cc53f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                  Our Services
+                  Office Cleaning Service
                 </a>
               </li>
               <li>
@@ -130,7 +130,7 @@ const Footer = () => {
                   <svg className="w-3 h-3 text-[#8cc53f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                  Faq's
+                  Medical Office Cleaning
                 </a>
               </li>
               <li>
@@ -138,7 +138,7 @@ const Footer = () => {
                   <svg className="w-3 h-3 text-[#8cc53f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                  Our Project
+                  Commercial Building Cleaning
                 </a>
               </li>
               <li>
@@ -146,7 +146,7 @@ const Footer = () => {
                   <svg className="w-3 h-3 text-[#8cc53f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                  Portfolio Us
+                  Retail Store Cleaning
                 </a>
               </li>
               <li>
@@ -154,7 +154,7 @@ const Footer = () => {
                   <svg className="w-3 h-3 text-[#8cc53f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                  Contact Us
+                  Deep Cleaning Services
                 </a>
               </li>
             </ul>
