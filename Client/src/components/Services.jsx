@@ -192,7 +192,7 @@ const Services = () => {
 
           {/* Right Content - Image */}
           <div className="relative opacity-0 translate-x-8 transition-all duration-1000 ease-out delay-500" ref={imageRef}>
-            <div className="relative overflow-hidden">
+            <div className="relative overflow-hidden w-3/4 mx-auto">
               <img 
                 src={require('../Assets/service.jpg')} 
                 alt="Office Cleaning Service" 
