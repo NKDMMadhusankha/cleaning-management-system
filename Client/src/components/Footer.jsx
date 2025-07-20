@@ -174,7 +174,7 @@ const Footer = () => {
                 <div>
                   <h5 className="text-white font-semibold mb-1 text-sm">Address</h5>
                   <p className="text-gray-400 text-sm">
-                    77815 Hartmann Plaza Suite 202,Idaho,USA
+                    No. 45, Galle Road, Wellawatte, Colombo 06, Western Province, Sri Lanka.
                   </p>
                 </div>
               </div>
@@ -187,7 +187,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <h5 className="text-white font-semibold mb-1 text-sm">Call Us</h5>
-                  <p className="text-gray-400 text-sm">+163 3654 9874</p>
+                  <p className="text-gray-400 text-sm">+94 11 234 5678</p>
                 </div>
               </div>
               
@@ -199,7 +199,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <h5 className="text-white font-semibold mb-1 text-sm">Email</h5>
-                  <p className="text-gray-400 text-sm">info@kleanix.com</p>
+                  <p className="text-gray-400 text-sm">info@cleanbee.com</p>
                 </div>
               </div>
             </div>
@@ -212,7 +212,7 @@ const Footer = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
             <div className="text-gray-400 text-sm">
-              Copyright © 2025 Kleanix. All Rights Reserved.
+              Copyright © 2025 CleanBee. All Rights Reserved.
             </div>
             <div className="flex items-center gap-3">
               <a href="#" className="w-8 h-8 bg-[#8cc53f] rounded-full flex items-center justify-center hover:bg-[#7ab534] transition-colors duration-300">

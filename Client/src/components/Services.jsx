@@ -200,7 +200,7 @@ const Services = () => {
               <img 
                 src={require('../Assets/service.jpg')} 
                 alt="Office Cleaning Service" 
-                className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover hover:scale-105 transition-transform duration-700 rounded-lg md:rounded-xl"
+                className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover rounded-lg md:rounded-xl"
               />
             </div>
           </div>
