@@ -46,11 +46,11 @@ const About = () => {
             
             // Start all counters
             setTimeout(() => {
-              animateCount(26, 0, (val) => setCounts(prev => ({ ...prev, projects: val })));
+              animateCount(400, 0, (val) => setCounts(prev => ({ ...prev, projects: val })));
             }, 300);
             
             setTimeout(() => {
-              animateCount(16, 0, (val) => setCounts(prev => ({ ...prev, customers: val })));
+              animateCount(1000, 0, (val) => setCounts(prev => ({ ...prev, customers: val })));
             }, 500);
             
             setTimeout(() => {
@@ -73,7 +73,7 @@ const About = () => {
   }, []);
 
   return (
-    <section className="bg-black py-20 relative overflow-hidden  rounded-[rem]">
+    <section className="bg-gray-50 py-20 relative overflow-hidden  rounded-[rem]">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
@@ -83,12 +83,12 @@ const About = () => {
               <span className="text-[#8cc53f] font-medium text-sm tracking-wider uppercase">ABOUT US</span>
             </div>
             
-            <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-8">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-8">
               One Stop Commercial
               <span className="block">Cleaning Company</span>
             </h2>
             
-            <p className="text-gray-300 leading-relaxed mb-8 text-lg">
+            <p className="text-gray-600 leading-relaxed mb-8 text-lg">
               House cleaning services provide professional cleaning of residential 
               spaces. These services are designed to maintain cleanliness, hygiene, 
               and overall appearance of homes, offering convenience to homeowners 
@@ -100,31 +100,31 @@ const About = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-8 mb-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-300" ref={statsRef}>
               <div className="text-center lg:text-left">
-                <div className="text-4xl lg:text-5xl font-bold text-white mb-2">
-                  {counts.projects}<span className="text-[#8cc53f]">M+</span>
+                <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
+                  {counts.projects}<span className="text-[#8cc53f]">+</span>
                 </div>
-                <p className="text-gray-400 text-sm">Cleaning Project Finish</p>
+                <p className="text-gray-500 text-sm">Cleaning Project Finish</p>
               </div>
               
               <div className="text-center lg:text-left">
-                <div className="text-4xl lg:text-5xl font-bold text-white mb-2">
-                  {counts.customers}<span className="text-[#8cc53f]">M+</span>
+                <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
+                  {counts.customers}<span className="text-[#8cc53f]">+</span>
                 </div>
-                <p className="text-gray-400 text-sm">Satisfied Our Customers</p>
+                <p className="text-gray-500 text-sm">Satisfied Our Customers</p>
               </div>
               
               <div className="text-center lg:text-left">
-                <div className="text-4xl lg:text-5xl font-bold text-white mb-2">
+                <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
                   {counts.members}<span className="text-[#8cc53f]">+</span>
                 </div>
-                <p className="text-gray-400 text-sm">Expert Members</p>
+                <p className="text-gray-500 text-sm">Expert Members</p>
               </div>
               
               <div className="text-center lg:text-left">
-                <div className="text-4xl lg:text-5xl font-bold text-white mb-2">
+                <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
                   {counts.awards}<span className="text-[#8cc53f]">+</span>
                 </div>
-                <p className="text-gray-400 text-sm">Company Award Winner</p>
+                <p className="text-gray-500 text-sm">Company Award Winner</p>
               </div>
             </div>
           </div>
@@ -137,9 +137,6 @@ const About = () => {
                 alt="Professional Cleaning Service" 
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
-              
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
           </div>
         </div>
