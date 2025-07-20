@@ -90,21 +90,19 @@ router.put('/:id', authenticateToken, verifyAdmin, async (req, res) => {
 });
 
 // Delete service (admin only) - soft delete by setting isActive to false
+
+// Delete service (admin only) - hard delete (remove from database)
 router.delete('/:id', authenticateToken, verifyAdmin, async (req, res) => {
   try {
-    const service = await Service.findByIdAndUpdate(
-      req.params.id,
-      { isActive: false },
-      { new: true }
-    );
+    const service = await Service.findByIdAndDelete(req.params.id);
 
     if (!service) {
       return res.status(404).json({ success: false, message: 'Service not found' });
     }
 
-    res.json({ success: true, message: 'Service removed successfully', data: service });
+    res.json({ success: true, message: 'Service deleted successfully' });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error removing service', error: error.message });
+    res.status(500).json({ success: false, message: 'Error deleting service', error: error.message });
   }
 });
 

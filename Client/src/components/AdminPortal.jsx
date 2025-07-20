@@ -579,7 +579,7 @@ const AdminPortal = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                      {services.map(service => (
+                      {services.filter(service => service.isActive).map(service => (
                         <tr key={service._id} className="hover:bg-gray-50">
                           <td className="px-6 py-4">
                             <p className="font-semibold text-gray-900">{service.name}</p>
@@ -588,12 +588,8 @@ const AdminPortal = () => {
                             <p className="text-gray-600">{service.description || 'No description'}</p>
                           </td>
                           <td className="px-6 py-4">
-                            <span className={`inline-block px-3 py-1 rounded-full text-sm ${
-                              service.isActive 
-                                ? 'bg-green-100 text-green-700' 
-                                : 'bg-red-100 text-red-700'
-                            }`}>
-                              {service.isActive ? 'Active' : 'Inactive'}
+                            <span className="inline-block px-3 py-1 rounded-full text-sm bg-green-100 text-green-700">
+                              Active
                             </span>
                           </td>
                           <td className="px-6 py-4">

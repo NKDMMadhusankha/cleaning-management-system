@@ -12,6 +12,7 @@ This project is a full-stack web application for managing cleaning services, bui
 - [Environment Variables](#environment-variables)
 - [Deployment](#deployment)
 - [Learn More](#learn-more)
+- [Setup Instructions](#setup-instructions)
 
 ---
 
@@ -151,5 +152,65 @@ Host the `Server` folder on your Node.js server (e.g., Heroku, Vercel, AWS).
 - [MongoDB Documentation](https://docs.mongodb.com/)
 
 ---
+
+## Setup Instructions
+
+### 1. Clone the repository
+
+```sh
+git clone <your-repo-url>
+cd cleaning-management-system
+```
+
+### 2. Install dependencies
+
+#### Client
+
+```sh
+cd Client
+npm install
+```
+
+#### Server
+
+```sh
+cd ../Server
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env` file in the `Server/` folder. Example:
+
+```
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/cleaning-management
+JWT_SECRET=your_jwt_secret
+```
+
+### 4. Create the admin user
+
+Run the script to create the default admin user:
+
+```sh
+cd Server
+node scripts/createAdmin.js
+```
+
+This will set up the admin account for the system.
+
+### 4. Start the backend server
+
+```sh
+cd Server
+npm start
+```
+
+### 5. Start the frontend React app
+
+```sh
+cd ../Client
+npm start
+```
 
 
