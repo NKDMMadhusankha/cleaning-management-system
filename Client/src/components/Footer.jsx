@@ -27,10 +27,8 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 bg-[#8cc53f] rounded-full flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-                </svg>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden">
+                <img src="/favicon1.ico" alt="CleanBee Logo" className="w-full h-full object-contain" />
               </div>
               <span className="text-xl font-bold text-white">CleanBee</span>
             </div>
