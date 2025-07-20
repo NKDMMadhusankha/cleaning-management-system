@@ -163,7 +163,7 @@ const Hero = () => {
                 <img 
                   src={HeroBg} 
                   alt="Professional Cleaning Service" 
-                  className="w-full h-auto max-h-[300px] sm:max-h-[400px] md:max-h-[500px] lg:h-auto lg:max-h-[580px] object-cover object-center hover:scale-105 transition-transform duration-500 rounded-lg lg:rounded-none relative z-10"
+                  className="w-60 sm:w-full h-auto lg:h-auto lg:max-h-[580px] object-contain sm:object-cover object-center hover:scale-105 transition-transform duration-500 rounded-lg lg:rounded-none relative z-10 mx-auto sm:mx-0"
                 />
               </div>
             </div>
