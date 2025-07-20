@@ -357,6 +357,7 @@ const BookingForm = ({ onSubmit }) => {
                         onChange={handleChange}
                         onFocus={() => setFocusedField('date_time')}
                         onBlur={() => setFocusedField(null)}
+                        placeholder=""
                         className="w-full px-6 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:border-[#8cc53f] focus:bg-green-50/50 transition-all duration-500 outline-none text-gray-800 shadow-lg text-base"
                         style={{
                           WebkitAppearance: 'none',
