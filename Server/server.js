@@ -75,16 +75,5 @@ app.use((req, res) => {
 
 // Debugging middleware to log all registered routes
 
-const PORT = process.env.PORT || 5001;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV}`);
-  if (app._router && app._router.stack) {
-    app._router.stack.forEach((middleware) => {
-      if (middleware.route) {
-        console.log(`Registered route: ${middleware.route.path}, Methods: ${Object.keys(middleware.route.methods).join(', ')}`);
-      }
-    });
-  }
-});
+// For Vercel serverless deployment, export the Express app as a handler
+module.exports = app;
