@@ -357,12 +357,27 @@ const BookingForm = ({ onSubmit }) => {
                         onChange={handleChange}
                         onFocus={() => setFocusedField('date_time')}
                         onBlur={() => setFocusedField(null)}
-                        className="w-full px-6 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:border-[#8cc53f] focus:bg-green-50/50 transition-all duration-500 outline-none text-gray-800 shadow-lg appearance-none [-webkit-appearance:none] [&::-webkit-datetime-edit]:px-0 [&::-webkit-datetime-edit-fields-wrapper]:px-0 [&::-webkit-datetime-edit-text]:px-1 [&::-webkit-datetime-edit-text]:text-gray-800 [&::-webkit-datetime-edit-month-field]:px-1 [&::-webkit-datetime-edit-day-field]:px-1 [&::-webkit-datetime-edit-year-field]:px-1 [&::-webkit-datetime-edit-hour-field]:px-1 [&::-webkit-datetime-edit-minute-field]:px-1 [&::-webkit-datetime-edit-ampm-field]:px-1"
+                        className="w-full px-6 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:border-[#8cc53f] focus:bg-green-50/50 transition-all duration-500 outline-none text-gray-800 shadow-lg text-base"
                         style={{
                           WebkitAppearance: 'none',
-                          MozAppearance: 'textfield'
+                          MozAppearance: 'textfield',
+                          fontSize: '16px', // Prevents zoom on iOS
+                          height: 'auto',
+                          minHeight: '56px'
                         }}
                       />
+                      {/* Custom placeholder for empty state - only show on non-iOS */}
+                      {!form.date_time && focusedField !== 'date_time' && (
+                        <div className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none text-base hidden sm:block">
+                          mm/dd/yyyy --:-- --
+                        </div>
+                      )}
+                      {/* Calendar icon - hide on focus for mobile */}
+                      <div className={`absolute right-6 top-1/2 transform -translate-y-1/2 pointer-events-none transition-opacity duration-200 ${focusedField === 'date_time' ? 'opacity-0 sm:opacity-100' : 'opacity-100'}`}>
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
                     </div>
                     {errors.date_time && (
                       <p className="text-red-500 text-sm mt-2 flex items-center animate-shake">
