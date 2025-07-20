@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 const mongoose = require('mongoose');
 const Admin = require('../models/Admin');
 
@@ -15,7 +15,7 @@ const createAdmin = async () => {
     const adminData = {
       firstName: 'Admin',
       lastName: 'User',
-      email: 'admin@cleanease.com',
+      email: 'admin@cleanbee.com',
       phone: '1234567890',
       password: 'admin123',
       role: 'admin'

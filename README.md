@@ -18,6 +18,7 @@ This project is a full-stack web application for managing cleaning services, bui
 
 ## Project Structure
 
+
 ```
 Client/
   ├── public/
@@ -30,16 +31,19 @@ Client/
   ├── package.json
   └── ...
 Server/
+  ├── controllers/
   ├── middleware/
   ├── models/
   ├── routes/
+  ├── scripts/
   ├── server.js
   ├── package.json
   └── .env
 ```
 
+
 - **Client/**: React frontend (UI, assets, styles)
-- **Server/**: Node.js backend (API, authentication, database models)
+- **Server/**: Node.js backend (API, authentication, database models, controllers, scripts)
 
 ---
 
@@ -117,11 +121,12 @@ The React app runs on [http://localhost:3000](http://localhost:3000) and proxies
 
 ## Environment Variables
 
+
 Create a `.env` file in the `Server/` folder for backend configuration. Example:
 
 ```
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/cleaning-management
+MONGODB_URI=mongodb://localhost:27017/cleaning-management
 JWT_SECRET=your_jwt_secret
 ```
 
@@ -188,29 +193,42 @@ MONGODB_URI=mongodb://localhost:27017/cleaning-management
 JWT_SECRET=your_jwt_secret
 ```
 
+
 ### 4. Create the admin user
 
-Run the script to create the default admin user:
+Run the script to create the default admin user (make sure your `.env` file uses `MONGODB_URI`):
 
 ```sh
-cd Server
-node scripts/createAdmin.js
+cd Server/scripts
+node createAdmin.js
 ```
 
-This will set up the admin account for the system.
+This will set up the admin account for the system. If you see a MongoDB URI error, ensure your `.env` file is in the `Server` folder and contains `MONGODB_URI`.
 
-### 4. Start the backend server
+### 5. Start the backend server
 
 ```sh
 cd Server
 npm start
 ```
 
-### 5. Start the frontend React app
+
+### 6. Start the frontend React app
 
 ```sh
 cd ../Client
 npm start
 ```
+---
+
+## Latest Updates
+
+- Refactored backend to clean MVC structure (controllers, models, routes)
+- Fixed booking and service CRUD routes and permissions
+- Added admin and owner delete routes for bookings
+- Added hard delete route for services
+- Fixed environment variable usage for scripts (use `MONGODB_URI`)
+- Improved error handling and frontend error messages
+- Ensure `.env` is in `Server` and contains correct variables
 
 

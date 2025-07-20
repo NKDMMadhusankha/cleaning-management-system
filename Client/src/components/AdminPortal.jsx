@@ -64,11 +64,17 @@ const AdminPortal = () => {
         }
 
         if (!response.ok) {
-          throw new Error('Failed to fetch bookings');
+          let errorMsg = 'Failed to load bookings. Please try again later.';
+          try {
+            const errData = await response.json();
+            errorMsg = errData.message || errorMsg;
+          } catch {}
+          setError(errorMsg);
+          setLoading(false);
+          return;
         }
 
         const data = await response.json();
-        
         // Transform the data to match our table structure
         const transformedBookings = data.data.map(booking => ({
           id: booking._id,
@@ -159,7 +165,14 @@ const AdminPortal = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete booking');
+        let errorMsg = 'Failed to delete booking';
+        try {
+          const errData = await response.json();
+          errorMsg = errData.message || errorMsg;
+        } catch {}
+        console.error('Error deleting booking:', errorMsg);
+        showToast(errorMsg, 'error');
+        return;
       }
 
       // Remove from local state after successful deletion
@@ -274,7 +287,12 @@ const AdminPortal = () => {
         setServices(services.filter(s => s._id !== serviceToDelete._id));
         showToast('Service removed successfully', 'success');
       } else {
-        showToast('Failed to remove service', 'error');
+        let errorMsg = 'Failed to remove service';
+        try {
+          const errData = await response.json();
+          errorMsg = errData.message || errorMsg;
+        } catch {}
+        showToast(errorMsg, 'error');
       }
     } catch (error) {
       console.error('Error removing service:', error);
