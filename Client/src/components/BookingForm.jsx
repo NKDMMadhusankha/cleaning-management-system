@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-
-const serviceOptions = [
-  'Deep Cleaning',
-  'Carpet Cleaning',
-  'Window Cleaning',
-  'Office Cleaning',
-  'Home Cleaning',
-];
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BookingForm = ({ onSubmit }) => {
+  const navigate = useNavigate();
+  const [serviceOptions, setServiceOptions] = useState([]);
   const [form, setForm] = useState({
     customer_name: '',
     address: '',
@@ -18,6 +13,42 @@ const BookingForm = ({ onSubmit }) => {
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
+
+  // Fetch services from the database
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const { API_BASE_URL } = require('../config');
+        const response = await fetch(`${API_BASE_URL}/api/services`);
+        if (response.ok) {
+          const data = await response.json();
+          setServiceOptions(data.data.map(service => service.name));
+        } else {
+          // Fallback to default services if API fails
+          setServiceOptions([
+            'Deep Cleaning',
+            'Carpet Cleaning',
+            'Window Cleaning',
+            'Office Cleaning',
+            'Home Cleaning',
+          ]);
+        }
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        // Fallback to default services if API fails
+        setServiceOptions([
+          'Deep Cleaning',
+          'Carpet Cleaning',
+          'Window Cleaning',
+          'Office Cleaning',
+          'Home Cleaning',
+        ]);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   const validate = () => {
     const newErrors = {};
@@ -33,39 +64,148 @@ const BookingForm = ({ onSubmit }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const { API_BASE_URL } = require('../config');
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      if (onSubmit) onSubmit(form);
-      setIsSubmitted(true);
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setForm({
-          customer_name: '',
-          address: '',
-          date_time: '',
-          service_type: '',
+      try {
+        const token = localStorage.getItem('token');
+        
+        // Check if user is logged in
+        if (!token) {
+          setShowLoginAlert(true);
+          setTimeout(() => {
+            setShowLoginAlert(false);
+            navigate('/login');
+          }, 3000);
+          return;
+        }
+        
+        const response = await fetch(`${API_BASE_URL}/api/bookings`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(form)
         });
-        setIsSubmitted(false);
-      }, 3000);
+
+        const data = await response.json();
+
+        if (data.success) {
+          if (onSubmit) onSubmit(form);
+          setIsSubmitted(true);
+          // Reset form after 3 seconds
+          setTimeout(() => {
+            setForm({
+              customer_name: '',
+              address: '',
+              date_time: '',
+              service_type: '',
+            });
+            setIsSubmitted(false);
+          }, 3000);
+        } else {
+          // Handle validation errors from server
+          const serverErrors = {};
+          if (data.errors) {
+            data.errors.forEach(error => {
+              if (error.includes('Customer name')) serverErrors.customer_name = error;
+              if (error.includes('Address')) serverErrors.address = error;
+              if (error.includes('Date and time')) serverErrors.date_time = error;
+              if (error.includes('Service type')) serverErrors.service_type = error;
+            });
+            setErrors(serverErrors);
+          }
+        }
+      } catch (error) {
+        console.error('Error submitting booking:', error);
+        // Show error message to user
+        setErrors({
+          submit: 'Failed to submit booking. Please try again.'
+        });
+      }
     }
   };
 
   return (
     <section id="booking" className="relative bg-gray-50 mt-20 mb-20 py-8 px-4 overflow-hidden">
+      {/* Modern Login Alert */}
+      {showLoginAlert && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in">
+          <div className="bg-white rounded-3xl p-8 max-w-md mx-4 shadow-2xl transform animate-slide-up">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full mb-4 animate-pulse-red-glow">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Login Required</h3>
+              <p className="text-gray-600 mb-6">Please login to book a cleaning service!</p>
+              <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Redirecting to login page...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Animated Background Elements and Floating Particles removed as requested */}
 
       <div className="relative max-w-6xl mx-auto">
         {isSubmitted ? (
-          <div className="bg-white/90 backdrop-blur-2xl rounded-3xl border border-green-100 p-6">
-            <div className="text-center py-8 animate-fade-in">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-400 to-[#8cc53f] rounded-full mb-4 animate-bounce shadow-2xl">
-                <svg className="w-8 h-8 text-white animate-check-mark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Left Side - Title and Icon (same as form view) */}
+            <div className="text-left animate-slide-down">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#8cc53f] to-green-600 rounded-full mb-4 shadow-2xl animate-pulse-glow">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-3xl font-bold text-[#8cc53f] mb-2 animate-slide-up">Booking Submitted!</h3>
-              <p className="text-gray-600 animate-slide-up delay-200">Thank you! We'll contact you within 24 hours to confirm your booking.</p>
+              <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-[#8cc53f] via-green-600 to-emerald-600 bg-clip-text text-transparent mb-4 leading-tight">
+                Book Your Cleaning Service
+              </h2>
+              <p className="text-gray-600 text-lg mb-4 leading-relaxed">
+                Experience professional cleaning with our expert team. We provide top-quality service with attention to every detail.
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center text-gray-600 text-sm">
+                  <svg className="w-5 h-5 text-[#8cc53f] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Professional and trained staff
+                </div>
+                <div className="flex items-center text-gray-600 text-sm">
+                  <svg className="w-5 h-5 text-[#8cc53f] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Eco-friendly cleaning products
+                </div>
+                <div className="flex items-center text-gray-600 text-sm">
+                  <svg className="w-5 h-5 text-[#8cc53f] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  100% satisfaction guarantee
+                </div>
+              </div>
+            </div>
+            
+            {/* Right Side - Confirmation Message */}
+            <div className="animate-slide-up delay-200">
+              <div className="bg-white/90 backdrop-blur-2xl rounded-3xl border border-green-100 p-6 transition-all duration-700 hover:bg-white/95 min-h-[600px] flex items-center justify-center">
+                <div className="text-center animate-fade-in">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-400 to-[#8cc53f] rounded-full mb-4 animate-bounce shadow-2xl">
+                    <svg className="w-8 h-8 text-white animate-check-mark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-3xl font-bold text-[#8cc53f] mb-2 animate-slide-up">Booking Submitted!</h3>
+                  <p className="text-gray-600 animate-slide-up delay-200">Thank you! We'll contact you within 24 hours to confirm your booking.</p>
+                </div>
+              </div>
             </div>
           </div>
         ) : (
@@ -271,6 +411,10 @@ const BookingForm = ({ onSubmit }) => {
           0%, 100% { box-shadow: 0 0 20px rgba(140, 197, 63, 0.4); }
           50% { box-shadow: 0 0 40px rgba(140, 197, 63, 0.8); }
         }
+        @keyframes pulse-red-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); }
+          50% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.8); }
+        }
         @keyframes slide-up {
           from { opacity: 0; transform: translateY(30px); }
           to { opacity: 1; transform: translateY(0); }
@@ -298,6 +442,7 @@ const BookingForm = ({ onSubmit }) => {
         .animate-float-2 { animation: float-2 7s ease-in-out infinite; }
         .animate-spin-slow { animation: spin-slow 20s linear infinite; }
         .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .animate-pulse-red-glow { animation: pulse-red-glow 2s ease-in-out infinite; }
         .animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
         .animate-slide-down { animation: slide-down 0.6s ease-out forwards; }
         .animate-fade-in { animation: fade-in 1s ease-out forwards; }

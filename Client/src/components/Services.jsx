@@ -192,15 +192,12 @@ const Services = () => {
 
           {/* Right Content - Image */}
           <div className="relative opacity-0 translate-x-8 transition-all duration-1000 ease-out delay-500" ref={imageRef}>
-            <div className="relative rounded-3xl overflow-hidden">
+            <div className="relative overflow-hidden">
               <img 
                 src={require('../Assets/service.jpg')} 
                 alt="Office Cleaning Service" 
                 className="w-full h-[600px] object-cover hover:scale-105 transition-transform duration-700"
               />
-              
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
             </div>
           </div>
         </div>

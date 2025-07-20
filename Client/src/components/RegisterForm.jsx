@@ -27,7 +27,7 @@ const Register = () => {
     }
     setLoading(true);
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -39,6 +39,7 @@ const Register = () => {
         })
       });
       const data = await response.json();
+      console.log('Registration response:', data); // Add logging to see the server response
       if (data.success) {
         setPopup({ type: 'success', message: 'Successfully registered! Redirecting to login...' });
         setForm({ firstName: '', lastName: '', email: '', phone: '', password: '', confirmPassword: '' });

@@ -96,12 +96,12 @@ const Hero = () => {
             </div>
 
             {/* Right Content - Image */}
-            <div className="w-full lg:w-1/2 mt-8 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:flex lg:items-end">
+            <div className="w-full lg:w-1/2 mt-8 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:flex lg:items-center">
               <div className="relative lg:ml-48 opacity-0 translate-x-8 transition-all duration-1000 ease-out delay-300" ref={imageRef}>
                 <img 
                   src={HeroBg} 
                   alt="Professional Cleaning Service" 
-                  className="w-full h-auto max-h-[300px] sm:max-h-[400px] md:max-h-[500px] lg:h-auto lg:max-h-[580px] object-cover object-bottom hover:scale-105 transition-transform duration-500 rounded-lg lg:rounded-none"
+                  className="w-full h-auto max-h-[300px] sm:max-h-[400px] md:max-h-[500px] lg:h-auto lg:max-h-[580px] object-cover object-center hover:scale-105 transition-transform duration-500 rounded-lg lg:rounded-none"
                 />
               </div>
             </div>

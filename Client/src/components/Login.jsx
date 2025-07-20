@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../App';
+import { API_BASE_URL } from '../config';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -17,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: form.email, password: form.password })
@@ -35,7 +36,7 @@ const Login = () => {
           if (data.data.user && data.data.user.role === 'admin') {
             navigate('/portal');
           } else {
-            navigate('/profile');
+            navigate('/');
           }
         }, 1500);
       } else {

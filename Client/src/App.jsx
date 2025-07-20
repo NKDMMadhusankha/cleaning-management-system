@@ -12,6 +12,7 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import AdminPortal from './components/AdminPortal';
 import AdminRegister from './components/AdminRegister';
+import { API_BASE_URL } from './config';
 
 // Create Auth Context
 const AuthContext = createContext();
@@ -36,7 +37,7 @@ function App() {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        const response = await fetch('/api/auth/verify', {
+        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

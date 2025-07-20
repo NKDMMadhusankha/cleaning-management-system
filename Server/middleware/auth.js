@@ -22,9 +22,14 @@ const authenticateToken = async (req, res, next) => {
     
     // Check if user exists and is active (check Admin first, then User)
     let account = await Admin.findById(decoded.userId);
-    if (!account) {
+    let isAdmin = false;
+    
+    if (account) {
+      isAdmin = true;
+    } else {
       account = await User.findById(decoded.userId);
     }
+
     if (!account || !account.isActive) {
       return res.status(401).json({
         success: false,
@@ -32,8 +37,12 @@ const authenticateToken = async (req, res, next) => {
       });
     }
 
-    // Add user info to request
-    req.user = { userId: decoded.userId };
+    // Add user and role information to the request
+    req.user = {
+      ...account.toObject(),
+      role: isAdmin ? 'admin' : 'user',
+      userId: decoded.userId
+    };
     next();
 
   } catch (error) {
@@ -47,4 +56,4 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
-module.exports = { authenticateToken };
+module.exports = authenticateToken;

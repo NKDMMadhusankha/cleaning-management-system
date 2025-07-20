@@ -7,15 +7,34 @@ dotenv.config();
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const bookingRoutes = require('./routes/bookings');
+const serviceRoutes = require('./routes/services');
 
 const app = express();
 
-app.use(cors());
+// Configure CORS
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Debug middleware to log all requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/services', serviceRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Cleaning Management System API' });
@@ -54,7 +73,7 @@ app.use((req, res) => {
 
 // Debugging middleware to log all registered routes
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -3,12 +3,15 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Admin = require('../models/Admin');
 const { validateRegistration } = require('../middleware/validation');
-const { authenticateToken } = require('../middleware/auth');
+const authenticateToken = require('../middleware/auth');
 
 const router = express.Router();
 
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
+const generateToken = (userId, isAdmin) => {
+  return jwt.sign({ 
+    userId,
+    role: isAdmin ? 'admin' : 'user'
+  }, process.env.JWT_SECRET, { expiresIn: '7d' });
 };
 
 // Debugging middleware to log route and method
@@ -29,7 +32,7 @@ router.post('/register', validateRegistration, async (req, res) => {
       const admin = new Admin({ firstName, lastName, email, phone, password, role: 'admin' });
       await admin.save();
       console.log('Admin registered:', admin.email);
-      const token = generateToken(admin._id);
+      const token = generateToken(admin._id, true);
       return res.status(201).json({ success: true, message: 'Admin registered successfully', data: { user: admin.getPublicProfile(), token } });
     } else {
       const existingUser = await User.findByEmail(email);
@@ -39,7 +42,7 @@ router.post('/register', validateRegistration, async (req, res) => {
       const user = new User({ firstName, lastName, email, phone, password, address: address || {} });
       await user.save();
       console.log('User registered:', user.email);
-      const token = generateToken(user._id);
+      const token = generateToken(user._id, false);
       return res.status(201).json({ success: true, message: 'User registered successfully', data: { user: user.getPublicProfile(), token } });
     }
   } catch (error) {
@@ -73,7 +76,8 @@ router.post('/login', async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });
     }
-    const token = generateToken(account._id);
+    const isAdmin = await Admin.findById(account._id) !== null;
+    const token = generateToken(account._id, isAdmin);
     res.json({ success: true, message: 'Login successful', data: { user: account.getPublicProfile(), token } });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Login failed', error: error.message });
@@ -83,15 +87,21 @@ router.post('/login', async (req, res) => {
 // Verify JWT
 router.get('/verify', authenticateToken, async (req, res) => {
   try {
-    // Try to find user in Admin first, then User (same logic as login)
-    let account = await Admin.findById(req.user.userId);
-    if (!account) {
-      account = await User.findById(req.user.userId);
-    }
-    if (!account || !account.isActive) {
+    // The authenticateToken middleware has already verified the token and set req.user
+    if (!req.user || !req.user.role) {
       return res.status(401).json({ success: false, message: 'Invalid token or user not found' });
     }
-    res.json({ success: true, message: 'Token is valid', data: { user: account.getPublicProfile() } });
+    
+    res.json({ 
+      success: true, 
+      message: 'Token is valid', 
+      data: { 
+        user: {
+          ...req.user,
+          isAdmin: req.user.role === 'admin'
+        }
+      } 
+    });
   } catch (error) {
     res.status(401).json({ success: false, message: 'Invalid token' });
   }
