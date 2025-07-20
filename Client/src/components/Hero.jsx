@@ -59,14 +59,14 @@ const Hero = () => {
             <div className="w-full lg:w-1/2">
               <div className="relative">
                 <div className="relative z-10 opacity-0 translate-y-8 transition-all duration-1000 ease-out" ref={heroRef}>
-                  <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#202020] leading-tight mb-6 sm:mb-8 text-center lg:text-left">
+                  <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#202020] leading-tight mb-6 sm:mb-8">
                     Professional 
                     <span className="block text-[#8cc53f] mt-1 sm:mt-2">
                       Cleaning Services
                     </span>
                     <span className="block text-3xl sm:text-3xl md:text-4xl lg:text-5xl mt-1 sm:mt-2 relative">
                       for Your 
-                      <span className="inline-block ml-1 relative">
+                      <span className="inline-block ml-2 relative">
                         <span 
                           className={`text-[#8cc53f] font-bold transition-all duration-300 ease-in-out transform ${
                             isAnimating 
@@ -76,7 +76,7 @@ const Hero = () => {
                           style={{ 
                             display: 'inline-block',
                             minWidth: '180px',
-                            textAlign: 'center',
+                            textAlign: 'left',
                             height: 'auto',
                             lineHeight: '1.2'
                           }}
