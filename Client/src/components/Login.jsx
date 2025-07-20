@@ -123,7 +123,7 @@ const Login = () => {
         <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
           <h2 className="text-4xl font-bold text-[#202020] mb-2">Welcome back!</h2>
           <p className="text-gray-600 mb-8">
-            Simplify your life and enjoy a spotless home with <span className="font-semibold text-[#8cc53f]">CleanEase</span>. Log in to book, manage, or track your cleaning services.
+            Simplify your life and enjoy a spotless home with <span className="font-semibold text-[#8cc53f]">CleanBee</span>. Log in to book, manage, or track your cleaning services.
           </p>
           <form className="space-y-5" onSubmit={handleLogin}>
             <input

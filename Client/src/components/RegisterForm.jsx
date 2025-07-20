@@ -154,7 +154,7 @@ const Register = () => {
           <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
             <h2 className="text-4xl font-bold text-[#202020] mb-2">Create your account</h2>
             <p className="text-gray-600 mb-8">
-              Join <span className="font-semibold text-[#8cc53f]">CleanEase</span> and enjoy a spotless home with just a few clicks. Register to book, manage, or track your cleaning services.
+              Join <span className="font-semibold text-[#8cc53f]">CleanBee</span> and enjoy a spotless home with just a few clicks. Register to book, manage, or track your cleaning services.
             </p>
             <form className="space-y-5" onSubmit={handleRegister}>
               <input

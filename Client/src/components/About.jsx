@@ -46,19 +46,19 @@ const About = () => {
             
             // Start all counters
             setTimeout(() => {
-              animateCount(400, 0, (val) => setCounts(prev => ({ ...prev, projects: val })));
+              animateCount(150, 0, (val) => setCounts(prev => ({ ...prev, projects: val })));
             }, 300);
             
             setTimeout(() => {
-              animateCount(1000, 0, (val) => setCounts(prev => ({ ...prev, customers: val })));
+              animateCount(250, 0, (val) => setCounts(prev => ({ ...prev, customers: val })));
             }, 500);
             
             setTimeout(() => {
-              animateCount(180, 0, (val) => setCounts(prev => ({ ...prev, members: val })));
+              animateCount(25, 0, (val) => setCounts(prev => ({ ...prev, members: val })));
             }, 700);
             
             setTimeout(() => {
-              animateCount(120, 0, (val) => setCounts(prev => ({ ...prev, awards: val })));
+              animateCount(5, 0, (val) => setCounts(prev => ({ ...prev, awards: val })));
             }, 900);
           }
         }
@@ -135,7 +135,7 @@ const About = () => {
               <img 
                 src={AboutBg} 
                 alt="Professional Cleaning Service" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover animate-roll-slow"
               />
             </div>
           </div>
@@ -148,6 +148,15 @@ const About = () => {
         .animate-in {
           opacity: 1 !important;
           transform: translateY(0) translateX(0) !important;
+        }
+        
+        @keyframes roll-slow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        .animate-roll-slow {
+          animation: roll-slow 90s linear infinite;
         }
       `}</style>
     </section>
