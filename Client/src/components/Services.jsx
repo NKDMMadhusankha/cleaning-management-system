@@ -30,18 +30,55 @@ const Services = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
+    let animationId;
+    let scrollPosition = 0;
+    const scrollSpeed = 0.3; // Slower speed for better mobile experience
+
     const scroll = () => {
-      scrollContainer.scrollLeft += 0.5;
+      scrollPosition += scrollSpeed;
+      
+      // Get the width of one complete set of services
+      const itemWidth = 250; // Approximate width of each service item
+      const totalWidth = services.length * itemWidth;
       
       // Reset to beginning when we've scrolled through the first set
-      if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
-        scrollContainer.scrollLeft = 0;
+      if (scrollPosition >= totalWidth) {
+        scrollPosition = 0;
+      }
+      
+      scrollContainer.scrollLeft = scrollPosition;
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    // Start the animation
+    animationId = requestAnimationFrame(scroll);
+
+    // Pause scrolling on hover/touch for better UX
+    const pauseScroll = () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
       }
     };
 
-    const intervalId = setInterval(scroll, 20); // Smoother animation
+    const resumeScroll = () => {
+      animationId = requestAnimationFrame(scroll);
+    };
 
-    return () => clearInterval(intervalId);
+    // Add event listeners for pause/resume
+    scrollContainer.addEventListener('mouseenter', pauseScroll);
+    scrollContainer.addEventListener('mouseleave', resumeScroll);
+    scrollContainer.addEventListener('touchstart', pauseScroll);
+    scrollContainer.addEventListener('touchend', resumeScroll);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+      scrollContainer.removeEventListener('mouseenter', pauseScroll);
+      scrollContainer.removeEventListener('mouseleave', resumeScroll);
+      scrollContainer.removeEventListener('touchstart', pauseScroll);
+      scrollContainer.removeEventListener('touchend', resumeScroll);
+    };
   }, []);
 
   const services = [
@@ -164,16 +201,17 @@ const Services = () => {
             <div className="overflow-hidden rounded-xl md:rounded-2xl bg-white p-2 sm:p-3 md:p-4 shadow-inner">
               <div 
                 ref={scrollRef}
-                className="flex space-x-2 sm:space-x-3 md:space-x-4 overflow-x-hidden"
+                className="flex space-x-2 sm:space-x-3 md:space-x-4 overflow-x-hidden will-change-scroll"
                 style={{ 
                   scrollBehavior: 'auto',
-                  whiteSpace: 'nowrap'
+                  whiteSpace: 'nowrap',
+                  WebkitOverflowScrolling: 'touch'
                 }}
               >
                 {duplicatedServices.map((service, index) => (
                   <div 
                     key={index} 
-                    className={`${service.bgColor} rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 flex items-center gap-2 md:gap-3 min-w-[200px] sm:min-w-[250px] md:min-w-[300px] shadow-md hover:shadow-lg transition-all duration-300 group cursor-pointer flex-shrink-0`}
+                    className={`${service.bgColor} rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 flex items-center gap-2 md:gap-3 min-w-[220px] sm:min-w-[250px] md:min-w-[300px] shadow-md hover:shadow-lg transition-all duration-300 group cursor-pointer flex-shrink-0`}
                   >
                     <div className={`${service.iconBg} w-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
                       <div className="w-5 sm:w-6 md:w-8 h-5 sm:h-6 md:h-8 text-[#8cc53f]">
