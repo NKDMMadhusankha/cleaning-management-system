@@ -337,7 +337,7 @@ const AdminPortal = () => {
     <>
       <Navbar />
       <div className="min-h-screen bg-gray-50 py-8 mt-20">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {loading ? (
           <div className="flex justify-center items-center min-h-[400px]">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8cc53f]"></div>
@@ -353,14 +353,14 @@ const AdminPortal = () => {
           <div>
             {/* Header */}
             <div className="mb-8">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-[#202020]">Admin Portal</h1>
-            <div className="flex items-center space-x-4">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-8 space-y-4 lg:space-y-0">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#202020]">Admin Portal</h1>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search bookings..."
-                  className="w-64 px-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-[#8cc53f]"
+                  className="w-full sm:w-64 px-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-[#8cc53f]"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -379,7 +379,7 @@ const AdminPortal = () => {
                 </svg>
               </div>
               <select
-                className="px-4 py-2 pr-8 rounded-full border border-gray-200 focus:outline-none focus:border-[#8cc53f] appearance-none bg-no-repeat bg-right"
+                className="w-full sm:w-auto px-4 py-2 pr-8 rounded-full border border-gray-200 focus:outline-none focus:border-[#8cc53f] appearance-none bg-no-repeat bg-right"
                 style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDFMNiA2TDExIDEiIHN0cm9rZT0iIzZCNzI4MCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==')", backgroundPosition: "right 20px center", backgroundSize: "12px" }}
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
@@ -392,37 +392,38 @@ const AdminPortal = () => {
               </select>
               <button
                 onClick={handleAddService}
-                className="px-6 py-2 bg-[#8cc53f] text-white rounded-full font-semibold hover:bg-[#7ab534] transition-colors flex items-center space-x-2"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2 bg-[#8cc53f] text-white rounded-full font-semibold hover:bg-[#7ab534] transition-colors flex items-center justify-center space-x-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-                <span>Add Services</span>
+                <span className="hidden sm:inline">Add Services</span>
+                <span className="sm:hidden">Services</span>
               </button>
             </div>
           </div>
 
           {/* Summary Cards at Top */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl shadow-md p-6 border-t-4 border-[#202020]">
-              <h3 className="text-lg font-semibold text-gray-600 mb-3">Total Bookings</h3>
-              <p className="text-4xl font-bold text-[#202020]">{bookings.length}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 border-t-4 border-[#202020]">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-600 mb-2 sm:mb-3">Total Bookings</h3>
+              <p className="text-2xl sm:text-4xl font-bold text-[#202020]">{bookings.length}</p>
             </div>
-            <div className="bg-white rounded-xl shadow-md p-6 border-t-4 border-yellow-600">
-              <h3 className="text-lg font-semibold text-gray-600 mb-3">Pending</h3>
-              <p className="text-4xl font-bold text-yellow-600">
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 border-t-4 border-yellow-600">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-600 mb-2 sm:mb-3">Pending</h3>
+              <p className="text-2xl sm:text-4xl font-bold text-yellow-600">
                 {bookings.filter(b => b.status === 'Pending').length}
               </p>
             </div>
-            <div className="bg-white rounded-xl shadow-md p-6 border-t-4 border-green-600">
-              <h3 className="text-lg font-semibold text-gray-600 mb-3">Confirmed</h3>
-              <p className="text-4xl font-bold text-green-600">
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 border-t-4 border-green-600">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-600 mb-2 sm:mb-3">Confirmed</h3>
+              <p className="text-2xl sm:text-4xl font-bold text-green-600">
                 {bookings.filter(b => b.status === 'Confirmed').length}
               </p>
             </div>
-            <div className="bg-white rounded-xl shadow-md p-6 border-t-4 border-blue-600">
-              <h3 className="text-lg font-semibold text-gray-600 mb-3">Completed</h3>
-              <p className="text-4xl font-bold text-blue-600">
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 border-t-4 border-blue-600">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-600 mb-2 sm:mb-3">Completed</h3>
+              <p className="text-2xl sm:text-4xl font-bold text-blue-600">
                 {bookings.filter(b => b.status === 'Completed').length}
               </p>
             </div>
@@ -431,8 +432,8 @@ const AdminPortal = () => {
 
         </div>
 
-        {/* Bookings Table */}
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+        {/* Bookings Table - Desktop View */}
+        <div className="hidden lg:block bg-white rounded-2xl shadow-md overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-[#e8f9d9]">
@@ -507,6 +508,73 @@ const AdminPortal = () => {
             </div>
           )}
         </div>
+
+        {/* Bookings Cards - Mobile View */}
+        <div className="lg:hidden space-y-4">
+          {filteredBookings.map(booking => (
+            <div key={booking.id} className="bg-white rounded-2xl shadow-md p-4 border border-gray-100">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="font-semibold text-[#202020] text-lg">{booking.customerName}</h3>
+                  <p className="text-sm text-gray-500">{booking.email}</p>
+                  <p className="text-sm text-gray-500">{booking.phone}</p>
+                </div>
+                <span className={`inline-block px-3 py-1 rounded-full text-xs ${getStatusColor(booking.status)}`}>
+                  {booking.status}
+                </span>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Service</p>
+                  <p className="font-medium text-[#202020]">{booking.service}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Price</p>
+                  <p className="font-medium text-[#202020]">{booking.price}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Date</p>
+                  <p className="font-medium text-[#202020]">{booking.date}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Time</p>
+                  <p className="font-medium text-[#202020]">{booking.time}</p>
+                </div>
+              </div>
+              
+              <div className="mb-3">
+                <p className="text-xs text-gray-500 uppercase tracking-wide">Address</p>
+                <p className="text-sm text-gray-700">{booking.address}</p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-2">
+                <select
+                  className="flex-1 px-3 py-2 pr-8 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-[#8cc53f] appearance-none bg-no-repeat bg-right"
+                  style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDFMNiA2TDExIDEiIHN0cm9rZT0iIzZCNzI4MCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==')", backgroundPosition: "right 12px center", backgroundSize: "10px" }}
+                  value={booking.status}
+                  onChange={(e) => handleUpdateStatus(booking.id, e.target.value)}
+                >
+                  <option value="Confirmed">Confirm</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Complete</option>
+                  <option value="Cancelled">Cancel</option>
+                </select>
+                <button
+                  onClick={() => confirmDelete(booking)}
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors font-medium"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+          {filteredBookings.length === 0 && (
+            <div className="text-center py-8 text-gray-500 bg-white rounded-2xl shadow-md">
+              No bookings found
+            </div>
+          )}
+        </div>
           </div>
         )}
       </div>
@@ -514,15 +582,15 @@ const AdminPortal = () => {
 
       {/* Service Management Modal */}
       {showServiceModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-4 sm:p-8 max-w-4xl w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-900">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
                 {editingService ? 'Edit Service' : 'Manage Services'}
               </h3>
               <button
                 onClick={closeServiceModal}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-400 hover:text-gray-600 transition-colors p-1"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -531,8 +599,8 @@ const AdminPortal = () => {
             </div>
 
             {/* Add/Edit Service Form */}
-            <div className="mb-8 bg-gray-50 rounded-lg p-6">
-              <h4 className="text-lg font-semibold text-gray-800 mb-4">
+            <div className="mb-8 bg-gray-50 rounded-lg p-4 sm:p-6">
+              <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">
                 {editingService ? 'Edit Service' : 'Add New Service'}
               </h4>
               <form onSubmit={handleServiceSubmit} className="space-y-4">
@@ -561,11 +629,11 @@ const AdminPortal = () => {
                     rows="3"
                   />
                 </div>
-                <div className="flex space-x-4">
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
                   <button
                     type="submit"
                     disabled={serviceLoading}
-                    className="px-6 py-2 bg-[#8cc53f] text-white rounded-lg font-semibold hover:bg-[#7ab534] transition-colors disabled:opacity-50"
+                    className="w-full sm:w-auto px-6 py-2 bg-[#8cc53f] text-white rounded-lg font-semibold hover:bg-[#7ab534] transition-colors disabled:opacity-50"
                   >
                     {serviceLoading ? 'Saving...' : (editingService ? 'Update Service' : 'Add Service')}
                   </button>
@@ -573,7 +641,7 @@ const AdminPortal = () => {
                     <button
                       type="button"
                       onClick={closeServiceModal}
-                      className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+                      className="w-full sm:w-auto px-6 py-2 bg-gray-200 text-gray-800 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
                     >
                       Cancel
                     </button>
@@ -584,8 +652,10 @@ const AdminPortal = () => {
 
             {/* Services List */}
             <div>
-              <h4 className="text-lg font-semibold text-gray-800 mb-4">Current Services</h4>
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">Current Services</h4>
+              
+              {/* Desktop Table View */}
+              <div className="hidden md:block bg-white rounded-lg border border-gray-200 overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead className="bg-gray-100">
@@ -624,43 +694,6 @@ const AdminPortal = () => {
                               >
                                 Remove
                               </button>
-      {/* Service Delete Confirmation Modal */}
-      {showServiceDeleteModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 border border-black">
-            <div className="text-center">
-              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6">
-                <svg className="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Delete Service</h3>
-              <p className="text-gray-600 mb-2">Are you sure you want to delete this service?</p>
-              {serviceToDelete && (
-                <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
-                  <p className="text-sm text-gray-600"><span className="font-semibold">Service:</span> {serviceToDelete.name}</p>
-                  <p className="text-sm text-gray-600"><span className="font-semibold">Description:</span> {serviceToDelete.description || 'No description'}</p>
-                </div>
-              )}
-              <p className="text-sm text-red-600 mb-8">This action cannot be undone.</p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button
-                  onClick={cancelDeleteService}
-                  className="px-6 py-3 bg-gray-200 text-gray-800 rounded-full font-semibold hover:bg-gray-300 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleDeleteService}
-                  className="px-6 py-3 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition-colors"
-                >
-                  Delete Service
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
                             </div>
                           </td>
                         </tr>
@@ -668,12 +701,44 @@ const AdminPortal = () => {
                     </tbody>
                   </table>
                 </div>
-                {services.length === 0 && (
-                  <div className="text-center py-8 text-gray-500">
-                    No services found
-                  </div>
-                )}
               </div>
+
+              {/* Mobile Card View */}
+              <div className="md:hidden space-y-3">
+                {services.filter(service => service.isActive).map(service => (
+                  <div key={service._id} className="bg-white rounded-lg border border-gray-200 p-4">
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="flex-1">
+                        <h5 className="font-semibold text-gray-900 mb-1">{service.name}</h5>
+                        <p className="text-sm text-gray-600">{service.description || 'No description'}</p>
+                      </div>
+                      <span className="inline-block px-2 py-1 rounded-full text-xs bg-green-100 text-green-700 ml-2">
+                        Active
+                      </span>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleEditService(service)}
+                        className="flex-1 px-3 py-2 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 transition-colors"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => confirmDeleteService(service)}
+                        className="flex-1 px-3 py-2 bg-red-500 text-white rounded text-sm hover:bg-red-600 transition-colors"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {services.length === 0 && (
+                <div className="text-center py-8 text-gray-500 bg-white rounded-lg border border-gray-200">
+                  No services found
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -681,41 +746,79 @@ const AdminPortal = () => {
 
       {/* Modern Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full mx-4 shadow-2xl">
             <div className="text-center">
               {/* Warning Icon */}
-              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6">
-                <svg className="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mx-auto flex items-center justify-center h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-red-100 mb-4 sm:mb-6">
+                <svg className="h-6 w-6 sm:h-8 sm:w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>
               
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Delete Booking</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">Delete Booking</h3>
               <p className="text-gray-600 mb-2">Are you sure you want to delete this booking?</p>
               
               {bookingToDelete && (
-                <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+                <div className="bg-gray-50 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 text-left">
                   <p className="text-sm text-gray-600"><span className="font-semibold">Customer:</span> {bookingToDelete.customerName}</p>
                   <p className="text-sm text-gray-600"><span className="font-semibold">Service:</span> {bookingToDelete.service}</p>
                   <p className="text-sm text-gray-600"><span className="font-semibold">Date:</span> {bookingToDelete.date}</p>
                 </div>
               )}
               
-              <p className="text-sm text-red-600 mb-8">This action cannot be undone.</p>
+              <p className="text-sm text-red-600 mb-6 sm:mb-8">This action cannot be undone.</p>
               
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button
                   onClick={cancelDelete}
-                  className="px-6 py-3 bg-gray-200 text-gray-800 rounded-full font-semibold hover:bg-gray-300 transition-colors"
+                  className="w-full sm:w-auto px-6 py-3 bg-gray-200 text-gray-800 rounded-full font-semibold hover:bg-gray-300 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => handleDeleteBooking(bookingToDelete.id)}
-                  className="px-6 py-3 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition-colors"
+                  className="w-full sm:w-auto px-6 py-3 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition-colors"
                 >
                   Delete Booking
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Service Delete Confirmation Modal */}
+      {showServiceDeleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full mx-4 border border-black">
+            <div className="text-center">
+              <div className="mx-auto flex items-center justify-center h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-red-100 mb-4 sm:mb-6">
+                <svg className="h-6 w-6 sm:h-8 sm:w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">Delete Service</h3>
+              <p className="text-gray-600 mb-2">Are you sure you want to delete this service?</p>
+              {serviceToDelete && (
+                <div className="bg-gray-50 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 text-left">
+                  <p className="text-sm text-gray-600"><span className="font-semibold">Service:</span> {serviceToDelete.name}</p>
+                  <p className="text-sm text-gray-600"><span className="font-semibold">Description:</span> {serviceToDelete.description || 'No description'}</p>
+                </div>
+              )}
+              <p className="text-sm text-red-600 mb-6 sm:mb-8">This action cannot be undone.</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={cancelDeleteService}
+                  className="w-full sm:w-auto px-6 py-3 bg-gray-200 text-gray-800 rounded-full font-semibold hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDeleteService}
+                  className="w-full sm:w-auto px-6 py-3 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition-colors"
+                >
+                  Delete Service
                 </button>
               </div>
             </div>
