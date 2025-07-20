@@ -357,7 +357,11 @@ const BookingForm = ({ onSubmit }) => {
                         onChange={handleChange}
                         onFocus={() => setFocusedField('date_time')}
                         onBlur={() => setFocusedField(null)}
-                        className="w-full px-6 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:border-[#8cc53f] focus:bg-green-50/50 transition-all duration-500 outline-none text-gray-800 shadow-lg"
+                        className="w-full px-6 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:border-[#8cc53f] focus:bg-green-50/50 transition-all duration-500 outline-none text-gray-800 shadow-lg appearance-none [-webkit-appearance:none] [&::-webkit-datetime-edit]:px-0 [&::-webkit-datetime-edit-fields-wrapper]:px-0 [&::-webkit-datetime-edit-text]:px-1 [&::-webkit-datetime-edit-text]:text-gray-800 [&::-webkit-datetime-edit-month-field]:px-1 [&::-webkit-datetime-edit-day-field]:px-1 [&::-webkit-datetime-edit-year-field]:px-1 [&::-webkit-datetime-edit-hour-field]:px-1 [&::-webkit-datetime-edit-minute-field]:px-1 [&::-webkit-datetime-edit-ampm-field]:px-1"
+                        style={{
+                          WebkitAppearance: 'none',
+                          MozAppearance: 'textfield'
+                        }}
                       />
                     </div>
                     {errors.date_time && (
