@@ -2,6 +2,8 @@
 
 This project is a full-stack web application for managing cleaning services, built with React (frontend) and Node.js/Express (backend).
 
+**🚀 Live Demo: [https://cleaning-management-system-tau.vercel.app/](https://cleaning-management-system-tau.vercel.app/)**
+
 ## Table of Contents
 
 - [Project Structure](#project-structure)
@@ -134,6 +136,11 @@ JWT_SECRET=your_jwt_secret
 
 ## Deployment
 
+### Live Application
+
+The application is deployed and accessible at:
+**[https://cleaning-management-system-tau.vercel.app/](https://cleaning-management-system-tau.vercel.app/)**
+
 ### Build the frontend
 
 ```sh
@@ -141,11 +148,13 @@ cd Client
 npm run build
 ```
 
-Deploy the contents of `Client/build` to your web server.
+Deploy the contents of `Client/build` to your web server or hosting platform like Vercel.
 
 ### Deploy the backend
 
-Host the `Server` folder on your Node.js server (e.g., Heroku, Vercel, AWS).
+Host the `Server` folder on your Node.js server (e.g., Heroku, Vercel, AWS, Railway).
+
+**Note:** The live demo is deployed on Vercel with both frontend and backend components.
 
 ---
 
@@ -230,5 +239,7 @@ npm start
 - Fixed environment variable usage for scripts (use `MONGODB_URI`)
 - Improved error handling and frontend error messages
 - Ensure `.env` is in `Server` and contains correct variables
+- **Deployed application on Vercel at [https://cleaning-management-system-tau.vercel.app/](https://cleaning-management-system-tau.vercel.app/)**
+- Made AdminPortal component fully mobile responsive
 
 
