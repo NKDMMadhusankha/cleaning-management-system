@@ -111,49 +111,49 @@ const Services = () => {
   const duplicatedServices = [...services, ...services];
 
   return (
-    <section className="bg-green-50 py-20 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-10 left-10 w-16 h-16 text-yellow-400 opacity-20">
+    <section className="bg-green-50 py-12 sm:py-16 md:py-20 relative overflow-hidden">
+      {/* Background decorative elements - hidden on mobile */}
+      <div className="hidden md:block absolute top-10 left-10 w-16 h-16 text-yellow-400 opacity-20">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
       </div>
-      <div className="absolute top-20 left-20 w-8 h-8 text-yellow-400 opacity-30">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-        </svg>
-      </div>
-
-      {/* Bottom decorative elements */}
-      <div className="absolute bottom-10 left-0 w-32 h-32 text-[#8cc53f] opacity-10">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-        </svg>
-      </div>
-      <div className="absolute bottom-20 left-10 w-8 h-8 text-[#8cc53f] opacity-20">
+      <div className="hidden lg:block absolute top-20 left-20 w-8 h-8 text-yellow-400 opacity-30">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
       </div>
 
-      {/* Main curved background */}
-      <div className="absolute bottom-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#8cc53f]/10 to-transparent rounded-l-[8rem]"></div>
+      {/* Bottom decorative elements - adjusted for mobile */}
+      <div className="absolute bottom-5 md:bottom-10 left-0 w-16 md:w-32 h-16 md:h-32 text-[#8cc53f] opacity-10">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+      <div className="hidden sm:block absolute bottom-10 md:bottom-20 left-5 md:left-10 w-6 md:w-8 h-6 md:h-8 text-[#8cc53f] opacity-20">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
 
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Main curved background - responsive */}
+      <div className="absolute bottom-0 right-0 w-1/3 sm:w-1/2 h-full bg-gradient-to-l from-[#8cc53f]/10 to-transparent rounded-l-[4rem] md:rounded-l-[8rem]"></div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left Content */}
-          <div className="opacity-0 translate-y-8 transition-all duration-1000 ease-out" ref={servicesRef}>
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-12 h-0.5 bg-[#8cc53f]"></div>
-              <span className="text-[#8cc53f] font-medium text-sm tracking-wider uppercase">OUR SERVICES</span>
+          <div className="opacity-0 translate-y-8 transition-all duration-1000 ease-out order-2 lg:order-1" ref={servicesRef}>
+            <div className="flex items-center gap-2 mb-4 md:mb-6">
+              <div className="w-8 md:w-12 h-0.5 bg-[#8cc53f]"></div>
+              <span className="text-[#8cc53f] font-medium text-xs md:text-sm tracking-wider uppercase">OUR SERVICES</span>
             </div>
             
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#202020] leading-tight mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#202020] leading-tight mb-4 md:mb-6 lg:mb-8">
               The Services We Provide
               <span className="block">For Our Customer</span>
             </h2>
             
-            <p className="text-gray-600 leading-relaxed mb-12 text-lg">
+            <p className="text-gray-600 leading-relaxed mb-6 md:mb-8 lg:mb-12 text-sm sm:text-base lg:text-lg">
               These services are designed to maintain cleanliness, hygiene, and 
               overall appearance of homes, offering convenience to homeowners 
               and ensuring a healthy living environment. Routine cleaning tasks 
@@ -161,10 +161,10 @@ const Services = () => {
             </p>
 
             {/* Auto-scrolling Services List */}
-            <div className="overflow-hidden rounded-2xl bg-white p-4 shadow-inner">
-                  <div 
+            <div className="overflow-hidden rounded-xl md:rounded-2xl bg-white p-2 sm:p-3 md:p-4 shadow-inner">
+              <div 
                 ref={scrollRef}
-                className="flex space-x-4 overflow-x-hidden"
+                className="flex space-x-2 sm:space-x-3 md:space-x-4 overflow-x-hidden"
                 style={{ 
                   scrollBehavior: 'auto',
                   whiteSpace: 'nowrap'
@@ -173,16 +173,20 @@ const Services = () => {
                 {duplicatedServices.map((service, index) => (
                   <div 
                     key={index} 
-                    className={`${service.bgColor} rounded-xl p-4 flex items-center gap-3 min-w-[300px] shadow-md hover:shadow-lg transition-all duration-300 group cursor-pointer flex-shrink-0`}
+                    className={`${service.bgColor} rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 flex items-center gap-2 md:gap-3 min-w-[200px] sm:min-w-[250px] md:min-w-[300px] shadow-md hover:shadow-lg transition-all duration-300 group cursor-pointer flex-shrink-0`}
                   >
-                    <div className={`${service.iconBg} w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      {service.icon}
+                    <div className={`${service.iconBg} w-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                      <div className="w-5 sm:w-6 md:w-8 h-5 sm:h-6 md:h-8 text-[#8cc53f]">
+                        {React.cloneElement(service.icon, { 
+                          className: "w-full h-full text-[#8cc53f]" 
+                        })}
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-bold text-[#202020] group-hover:text-[#8cc53f] transition-colors duration-300">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#202020] group-hover:text-[#8cc53f] transition-colors duration-300 truncate">
                         {service.title}
                       </h3>
-                      <p className="text-sm text-gray-600">Professional cleaning</p>
+                      <p className="text-xs sm:text-sm text-gray-600">Professional cleaning</p>
                     </div>
                   </div>
                 ))}
@@ -191,12 +195,12 @@ const Services = () => {
           </div>
 
           {/* Right Content - Image */}
-          <div className="relative opacity-0 translate-x-8 transition-all duration-1000 ease-out delay-500" ref={imageRef}>
-            <div className="relative overflow-hidden w-3/4 mx-auto">
+          <div className="relative opacity-0 translate-x-8 transition-all duration-1000 ease-out delay-500 order-1 lg:order-2" ref={imageRef}>
+            <div className="relative overflow-hidden w-full sm:w-4/5 md:w-3/4 mx-auto">
               <img 
                 src={require('../Assets/service.jpg')} 
                 alt="Office Cleaning Service" 
-                className="w-full h-[600px] object-cover hover:scale-105 transition-transform duration-700"
+                className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover hover:scale-105 transition-transform duration-700 rounded-lg md:rounded-xl"
               />
             </div>
           </div>
@@ -216,6 +220,13 @@ const Services = () => {
           }
           100% {
             transform: translateX(-50%);
+          }
+        }
+
+        @media (max-width: 640px) {
+          .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
           }
         }
       `}</style>
